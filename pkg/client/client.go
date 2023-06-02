@@ -16,7 +16,7 @@ func Send(filePath string, bytesPerIteration int) error {
 	}
 	defer file.Close()
 
-	conn, err := net.Dial("tcp", fmt.Sprintf(":%d", constants.DefaultPort))
+	conn, err := net.Dial("tcp", fmt.Sprintf("0.0.0.0:%d", constants.DefaultPort))
 	if err != nil {
 		return err
 	}

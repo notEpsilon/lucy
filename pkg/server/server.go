@@ -16,7 +16,7 @@ func Start(outputFilePath string, bytesPerIteration int) error {
 	}
 	defer file.Close()
 
-	ln, err := net.Listen("tcp", fmt.Sprintf(":%d", constants.DefaultPort))
+	ln, err := net.Listen("tcp", fmt.Sprintf("0.0.0.0:%d", constants.DefaultPort))
 	if err != nil {
 		return err
 	}
