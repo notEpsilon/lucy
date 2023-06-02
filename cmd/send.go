@@ -29,7 +29,13 @@ var sendCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		client.Send(file, int(bpi))
+		host, err := cmd.Flags().GetString("host")
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		client.Send(file, int(bpi), host)
 	},
 }
 
@@ -47,4 +53,5 @@ func init() {
 	// sendCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	sendCmd.Flags().Int32P("bytesPerIteration", "b", 10*constants.KiB, "How many bytes to send per iteration (default 10 KB)")
 	sendCmd.Flags().StringP("file", "f", "", "The file name to send including extension")
+	sendCmd.Flags().StringP("host", "h", "", "The LAN host address to send the file to")
 }

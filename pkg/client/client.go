@@ -9,14 +9,14 @@ import (
 	"github.com/notEpsilon/lucy/pkg/constants"
 )
 
-func Send(filePath string, bytesPerIteration int) error {
+func Send(filePath string, bytesPerIteration int, sendHost string) error {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
 
-	conn, err := net.Dial("tcp", fmt.Sprintf("0.0.0.0:%d", constants.DefaultPort))
+	conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", sendHost, constants.DefaultPort))
 	if err != nil {
 		return err
 	}

@@ -9,6 +9,18 @@ import (
 	"github.com/notEpsilon/lucy/pkg/constants"
 )
 
+func getOutboundIP() net.IP {
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
+
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+
+	return localAddr.IP
+}
+
 func Start(outputFilePath string, bytesPerIteration int) error {
 	file, err := os.OpenFile(outputFilePath, os.O_CREATE|os.O_RDWR, 0666)
 	if err != nil {
@@ -16,12 +28,13 @@ func Start(outputFilePath string, bytesPerIteration int) error {
 	}
 	defer file.Close()
 
-	ln, err := net.Listen("tcp", fmt.Sprintf("0.0.0.0:%d", constants.DefaultPort))
+	ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", getOutboundIP().String(), constants.DefaultPort))
 	if err != nil {
 		return err
 	}
 	defer ln.Close()
 	log.Printf("[lucy]: Listening on %s for incoming files...\n", ln.Addr().String())
+	log.Printf("[lucy]: let client send to this address (%s)\n", getOutboundIP().String())
 
 	for {
 		conn, err := ln.Accept()
