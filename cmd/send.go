@@ -53,5 +53,5 @@ func init() {
 	// sendCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	sendCmd.Flags().Int32P("bytesPerIteration", "b", 10*constants.KiB, "How many bytes to send per iteration (default 10 KB)")
 	sendCmd.Flags().StringP("file", "f", "", "The file name to send including extension")
-	sendCmd.Flags().StringP("host", "h", "", "The LAN host address to send the file to")
+	sendCmd.Flags().String("host", "", "The LAN host address to send the file to")
 }
