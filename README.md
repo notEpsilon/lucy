@@ -27,7 +27,7 @@ lucy wait -o output_file.zip
 then on the sender computer run:
 
 ```shell
-lucy send -f my_file.zip
+lucy send -f my_file.zip --host <the host provided by the `lucy wait` command>
 ```
 
 ## Options
